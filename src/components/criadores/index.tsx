@@ -32,9 +32,9 @@ export const CriadoresPage = ({ recipes }: { recipes: Recipe[]; }) => {
 
       return matchesSearch && matchesCategory && matchesManual;
     });
-  }, [searchTerm, selectedCategory, selectedManual]);
+  }, [searchTerm, selectedCategory, selectedManual, recipes]);
 
-  const categories = Array.from(new Set(recipes.map((recipe: Recipe) => recipe.category || "Outros")));
+  const categories = Array.from(new Set(recipes.map((recipe: Recipe) => recipe.category ?? "Outros")));
 
   const manuals = Array.from(new Set(recipes.map((recipe: Recipe) => recipe.manual)));
 
@@ -58,7 +58,7 @@ export const CriadoresPage = ({ recipes }: { recipes: Recipe[]; }) => {
     const grouped: Record<string, Recipe[]> = {};
 
     filteredRecipes.forEach((recipe) => {
-      const category = recipe.category || "Outros";
+      const category = recipe.category ?? "Outros";
       if (!grouped[category]) {
         grouped[category] = [];
       }
@@ -197,8 +197,8 @@ export const CriadoresPage = ({ recipes }: { recipes: Recipe[]; }) => {
                     <div>
                       <label className="block text-sm font-medium mb-1">Categoria</label>
                       <Select
-                        value={selectedCategory || ""}
-                        onValueChange={(value) => setSelectedCategory(value || null)}
+                        value={selectedCategory ?? ""}
+                        onValueChange={(value) => setSelectedCategory(value ?? null)}
                       >
                         <SelectTrigger className="bg-slate-900 border-slate-700">
                           <SelectValue placeholder="Todas as categorias" />
@@ -216,7 +216,7 @@ export const CriadoresPage = ({ recipes }: { recipes: Recipe[]; }) => {
 
                     <div>
                       <label className="block text-sm font-medium mb-1">Manual</label>
-                      <Select value={selectedManual || ""} onValueChange={(value) => setSelectedManual(value || null)}>
+                      <Select value={selectedManual ?? ""} onValueChange={(value) => setSelectedManual(value ?? null)}>
                         <SelectTrigger className="bg-slate-900 border-slate-700">
                           <SelectValue placeholder="Todos os manuais" />
                         </SelectTrigger>
@@ -274,7 +274,7 @@ export const CriadoresPage = ({ recipes }: { recipes: Recipe[]; }) => {
                       <div className="w-full sm:w-2/3 flex justify-end">
                         <Badge className="text-sm px-3 py-1 bg-emerald-900/50 text-emerald-400 border-emerald-800">
                           <Beaker className="h-3.5 w-3.5 mr-1" />
-                          {selectedRecipe.category || "Outros"}
+                          {selectedRecipe.category ?? "Outros"}
                         </Badge>
                       </div>
                     </div>
